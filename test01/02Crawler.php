@@ -1,9 +1,9 @@
 <?php
+// phpQueryをロードする
+require_once("phpQuery-onefile.php");
+
 // データ取得の処理を関数化
 function getData($url){
-
-	// phpQueryをロードする
-	require_once("phpQuery-onefile.php");
 
 	// htmlを取得する
 	$original = $url;
