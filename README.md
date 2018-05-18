@@ -5,7 +5,7 @@
 01 TwitterAPI 画像検索 
 1.外部リポジトリをインストール
 	composer require abraham/twitteroauth
-2.test2018/test01/downloadを作成
+2.課題ファイルと同じ階層にディレクトリ download を作成
 3.Twitter API関連情報を設定
 
 
