@@ -1,0 +1,161 @@
+<html>
+<head>
+<META http-equiv="Content-Type" charset="UTF-8">
+<title>04_アニメーションとイベント駆動処理の作成</title>
+<script language="javascript">
+//画像を配列に入れる
+var right_img = new Array();
+right_img[0] = new Image();
+right_img[0].src = "images/mario_2.png";
+right_img[1] = new Image();
+right_img[1].src=  "images/mario_3.png";
+
+var left_img = new Array();
+left_img[0] = new Image();
+left_img[0].src = "images/mario_5.png";
+left_img[1] = new Image();
+left_img[1].src=  "images/mario_6.png";
+
+//グローバル関数
+var cnt=0;
+var up_time;
+var down_time;
+var flg = 0;
+
+//マリオを右向きに変更
+function changeRightImg(){
+
+	if (cnt == 2)
+	{ cnt=0; }
+	else
+	{ cnt++; }
+	
+	//表示する画像を変更
+	document.getElementById("img").src=right_img[cnt].src;
+}
+//マリオを左向きに変更
+function changeLeftImg(){
+
+	if (cnt == 2)
+	{ cnt=0; }
+	else
+	{ cnt++; }
+
+	//表示する画像を変更
+	document.getElementById("img").src=left_img[cnt].src;
+}
+//マリオをジャンプさせる
+function upImg() {
+	if(flg == 1){
+		return;
+	}else{
+		flg = 1;
+	}
+	up_time = setInterval(function(){
+		//y軸-1
+		y-=1;
+
+		document.getElementById("mario").style.top = y + "px";
+		//300px上がったら、下がる
+		if(y <= 300){
+			clearInterval(up_time);
+			downImg();
+		}
+	},5);
+}
+function downImg() {
+	down_time = setInterval(function(){
+		//y軸+1
+		y+=1;
+
+		document.getElementById("mario").style.top = y + "px";
+		//地面の高さまで戻る
+		if(y >= 430){
+			clearInterval(down_time);
+		}
+	},5);
+	flg = 0;
+}
+
+// マリオの初期位置
+var x  = 450 ; // x軸
+var y  = 430 ; // y軸
+var pv =   5 ; // 1回の移動距離
+var left  = 0 ;
+var up    = 0 ;
+var right = 0 ;
+var space = 0 ;
+
+/********** ボタンに関する処理 **********/
+
+function keydown(event) // ボタンを押下したとき
+{
+	if(event.keyCode == 37) //left key
+	{
+		left = 1;
+		changeLeftImg();
+	}
+	  if(event.keyCode == 38) //up key
+	  {
+	    up = 1;
+	    upImg();
+	  }
+	if(event.keyCode == 39) //right key
+	{
+		right = 1;
+		changeRightImg();
+	}
+	disp() ;
+}
+
+function disp() // 画像を画面表示
+{
+	var max = document.body.clientWidth-85;
+	if(left==1){
+		x = x - pv;
+		if (x < 0){
+			x = 0;
+		}
+	}
+	if(right==1){
+		x = x + pv;
+		if (x >= max){
+			x = max;
+	  	}
+	}
+	document.getElementById("mario").style.left = x;
+}
+
+function keyup(event) // ボタンが離されたとき
+{
+	if(event.keyCode == 37) //left key
+	{
+		left = 0;
+		document.getElementById("img").src="images/mario_4.png";
+	}
+	if(event.keyCode == 38) //up key
+	{
+		up = 0;
+	}
+	if(event.keyCode == 39) //right key
+	{
+		right = 0;
+		document.getElementById("img").src="images/mario_1.png";
+	 }
+}
+</script>
+</head>
+<body>
+<div style="background-color:#0099FF;height:500px;">
+	<div id="mario" style="position:absolute;z-index:1;visibility:visible;top:430px;left:450px;">
+	<img id="img" src="images/mario_1.png">
+	</div>
+</div>
+<div style="background-color:#D2691E;height:200px;"></div>
+<script language="javascript">
+document.onkeydown = keydown ; // ボタンを押した
+document.onkeyup   = keyup ; // ボタンを離した
+</script>
+</body>
+</html>
+
