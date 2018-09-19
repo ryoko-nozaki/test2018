@@ -1,7 +1,9 @@
 test02
 
 03 GoogleSheetsAPI_データ抽出
-
+実行手順
+	1.03GoogleSheetsAPI.php 3行目にAPIキーを設定
+	2.ソースを実行
 
 04 アニメーションとイベント駆動処理の作成
 実行手順
